@@ -148,7 +148,7 @@ function update() {
 	if (ball && ball.body.velocity.y > 0 && ball.body.y > 188 && !ball.isBelowHoop) {
 		ball.isBelowHoop = true;
 		ball.body.collideWorldBounds = false;
-		var rand = Math.floor(Math.random() * 5);
+		var rand = Math.floor(Math.random() * 2);
 		if (ball.body.x > 151 && ball.body.x < 249) {
 			emojiName = "win" + rand;
 			current_score += 1;
@@ -198,12 +198,14 @@ function hitRim() {
 function createBall() {
 
 	var xpos;
-	if (current_score === 0) {
-		xpos = 200;
-	} else {
-		xpos = 60 + Math.random() * 280;
-	}
-	spawn.play();
+	// if (current_score === 0) {
+	// 	xpos = 200;
+	// } else {
+	// 	xpos = 200
+	// 	// xpos = 60 + Math.random() * 280;
+	// }
+	xpos = 200
+	// spawn.play();
 	ball = game.add.sprite(xpos, 547, 'ball');
 	game.add.tween(ball.scale).from({x : 0.7, y : 0.7}, 100, Phaser.Easing.Linear.None, true, 0, 0, false);
 	game.physics.p2.enable(ball, false);
@@ -220,7 +222,7 @@ var end_location;
 
 function click(pointer) {
 
-	var bodies = game.physics.p2.hitTest(pointer.position, [ ball.body ]);
+	var bodies = game.physics.p2.hitTest(pointer.position, [ball.body]);
 	if (bodies.length) {
 		start_location = [pointer.x, pointer.y];
 		isDown = true;
@@ -238,11 +240,11 @@ function release(pointer) {
 		isDown = false;
 		end_location = [pointer.x, pointer.y];
 
-		if (end_location[1] < start_location[1]) {
-			var slope = [end_location[0] - start_location[0], end_location[1] - start_location[1]];
-			var x_traj = -2300 * slope[0] / slope[1];
-			launch(x_traj);
-		}
+		// if (end_location[1] < start_location[1]) {
+		// }
+		var slope = [end_location[0] - start_location[0], end_location[1] - start_location[1]];
+		var x_traj = -2300 * slope[0] / slope[1];
+		launch(x_traj);
 	}
 
 }
